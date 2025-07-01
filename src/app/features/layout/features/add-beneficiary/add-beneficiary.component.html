@@ -1,0 +1,231 @@
+<div class="">
+  <!-- Add Beneficiary Form -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-8">Add Beneficiary</h2>
+    
+    <form [formGroup]="beneficiaryForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- First Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Beneficiary Name -->
+        <div>
+          <label for="beneficiaryName" class="block text-sm font-medium text-gray-700 mb-2">
+            Beneficiary Name
+          </label>
+          <input
+            type="text"
+            id="beneficiaryName"
+            formControlName="beneficiaryName"
+            appInputStyle
+            [class.border-red-500]="isFieldInvalid('beneficiaryName')"
+            placeholder="Enter beneficiary name"
+          >
+          @if (isFieldInvalid('beneficiaryName')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('beneficiaryName') }}
+              </div>
+          }
+        </div>
+
+        <!-- Bank Name -->
+        <div>
+          <label for="bankName" class="block text-sm font-medium text-gray-700 mb-2">
+            Bank Name
+          </label>
+          <input
+            type="text"
+            id="bankName"
+            formControlName="bankName"
+            appInputStyle
+            [class.border-red-500]="isFieldInvalid('bankName')"
+            placeholder="Enter bank name"
+          >
+          @if (isFieldInvalid('bankName')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('bankName') }}
+              </div>
+          }
+        </div>
+      </div>
+
+      <!-- Second Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Beneficiary Account Number -->
+        <div>
+          <label for="accountNumber" class="block text-sm font-medium text-gray-700 mb-2">
+            Beneficiary Account Number
+          </label>
+          <input
+            type="text"
+            id="accountNumber"
+            formControlName="accountNumber"
+            appInputStyle
+            [class.border-red-500]="isFieldInvalid('accountNumber')"
+            placeholder="Enter account number"
+          >
+          @if (isFieldInvalid('accountNumber')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('accountNumber') }}
+              </div>
+          }
+        </div>
+
+        <!-- Confirm Beneficiary Account Number -->
+        <div>
+          <label for="confirmAccountNumber" class="block text-sm font-medium text-gray-700 mb-2">
+            Confirm Beneficiary Account Number
+          </label>
+          <input
+            type="text"
+            id="confirmAccountNumber"
+            formControlName="confirmAccountNumber"
+            appInputStyle
+            [class.border-red-500]="isFieldInvalid('confirmAccountNumber')"
+            placeholder="Confirm account number"
+          >
+          @if (isFieldInvalid('confirmAccountNumber')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('confirmAccountNumber') }}
+              </div>
+          }
+        </div>
+      </div>
+
+      <!-- Third Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Phone Number -->
+        <div>
+          <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            appInputStyle
+            [class.border-red-500]="isFieldInvalid('phoneNumber')"
+            placeholder="Enter phone number"
+          >
+          @if (isFieldInvalid('phoneNumber')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('phoneNumber') }}
+              </div>
+          }
+        </div>
+
+        <!-- Narration / Remarks -->
+        <div>
+          <label for="narration" class="block text-sm font-medium text-gray-700 mb-2">
+            Narration / Remarks
+          </label>
+          <input
+            type="text"
+            id="narration"
+            formControlName="narration"
+            appInputStyle
+            placeholder="Enter narration or remarks"
+          >
+        </div>
+      </div>
+
+      <!-- Fourth Row -->
+      <div>
+        <label for="emailId" class="block text-sm font-medium text-gray-700 mb-2">
+          Email ID
+        </label>
+        <input
+          type="email"
+          id="emailId"
+          formControlName="emailId"
+          appInputStyle
+          [class.border-red-500]="isFieldInvalid('emailId')"
+          placeholder="Enter email address"
+        >
+          @if (isFieldInvalid('emailId')) {
+              <div class="mt-1 text-sm text-red-600">
+                {{ getFieldError('emailId') }}
+              </div>
+          }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button
+          type="submit"
+          [disabled]="beneficiaryForm.invalid"
+          class="bg-slate-600 hover:bg-slate-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200"
+        >
+          Add Beneficiary
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- List of Beneficiary -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="p-6 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">List of Beneficiary</h2>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <!-- Table Header -->
+        <thead class="bg-gray-50 border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Beneficiary Name
+            </th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Bank Name
+            </th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Beneficiary Account Number
+            </th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Phone Number
+            </th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Status
+            </th>
+          </tr>
+        </thead>
+
+        <!-- Table Body -->
+        <tbody class="bg-white divide-y divide-gray-200">
+            @for (beneficiary of beneficiaries; track $index) {
+                <tr 
+                  class="hover:bg-gray-50 transition-colors"
+                  [class.bg-gray-25]="$index % 2 === 1"
+                >
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {{ beneficiary.beneficiaryName }}
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {{ beneficiary.bankName }}
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {{ beneficiary.accountNumber }}
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {{ beneficiary.phoneNumber }}
+                  </td>
+                  <td class="px-6 py-4">
+                    <span [class]="getStatusClass(beneficiary.status)">
+                      {{ beneficiary.status }}
+                    </span>
+                  </td>
+                </tr>
+            }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+     @if (beneficiaries.length === 0) {
+         <div class="text-center py-12">
+           <div class="text-gray-500 text-lg mb-2">No beneficiaries found</div>
+           <div class="text-gray-400 text-sm">Add your first beneficiary using the form above</div>
+         </div>
+     }
+  </div>
+</div>

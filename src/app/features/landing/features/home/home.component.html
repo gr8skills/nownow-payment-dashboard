@@ -1,0 +1,334 @@
+<!-- Main Content -->
+<main class="flex flex-col items-center justify-center">
+  <!-- Hero Section -->
+  <section
+    class="flex flex-col items-center justify-center bg-primary-faint px-4 pt-12 text-center w-full"
+  >
+    <section class="flex flex-col items-center justify-center pb-32">
+      <h1 class="!font-medium max-w-3xl">
+        Coordination Platform That Simplifies & Safeguards Pollination & Other
+        Tasks
+      </h1>
+
+      <p class="text-gray-600 max-w-2xl !mt-4">
+        Designed to eliminate miscommunication, prevent chemical incidents, and
+        improve efficiencies, PollinLink brings together every stakeholder
+        involved in seed production through a single, secure interface.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 !mt-6">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.example.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-2 bg-black !text-white !font-medium px-6 py-3 rounded-xl"
+        >
+          <img
+          class="!w-5 !h-5"
+            ngSrc="/icons/jam_apple.svg"
+            alt="Apple logo"
+            width="20"
+            height="20"
+          />
+          <span>Get on Iphone</span>
+        </a>
+        <a
+          href="https://apps.apple.com/app/id1234567890"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-2 bg-black !text-white !font-medium px-6 py-3 rounded-xl"
+        >
+          <img
+          class="!w-5 !h-5"
+            ngSrc="/icons/playstore.svg"
+            alt="Google logo"
+            width="20"
+            height="20"
+          />
+          <span>Get on Andriod</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <img
+        ngSrc="/media/Dashboard.png"
+        alt="Platform Dashboard"
+        class="!w-full object-contain md:!w-[800px] md:!h-[400px] md:object-auto max-w-3xl"
+        width="800"
+        height="400"
+        priority
+      />
+  </section>
+
+  <!-- Features Section -->
+  <section class="flex justify-center py-8 md:py-12 bg-white !-mt-7 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 container-width">
+      <div class="flex flex-col justify-center items-center text-center">
+        <div
+          class="grid place-content-center w-12 h-12 mb-4 rounded-full shadow-lg"
+        >
+          <img
+            class="!w-6 !h-6 object-contain"
+            ngSrc="/icons/plant-line.svg"
+            alt="field icon"
+            width="24"
+            height="24"
+          />
+        </div>
+        <h4 class="!mt-4 !font-medium">Field Mapping</h4>
+        <p class="text-gray-600 !mt-2">
+          Upload your fields and visualize progress
+        </p>
+      </div>
+
+      <div class="flex flex-col justify-center items-center text-center">
+        <div
+          class="grid place-content-center w-12 h-12 mb-4 rounded-full shadow-lg"
+        >
+          <img
+            class="!w-6 !h-6 object-contain"
+            ngSrc="/icons/calendar-2-line.svg"
+            alt="field icon"
+            width="24"
+            height="24"
+          />
+        </div>
+        <h4 class="!mt-4 !font-medium">Assign Fields</h4>
+        <p class="text-gray-600 !mt-2">
+          Assign fields to pollinators and agronomist
+        </p>
+      </div>
+
+      <div class="flex flex-col justify-center items-center text-center">
+        <div
+          class="grid place-content-center w-12 h-12 mb-4 rounded-full shadow-lg"
+        >
+          <img
+            class="!w-6 !h-6 object-contain"
+            ngSrc="/icons/calendar-check-line.svg"
+            alt="field icon"
+            width="24"
+            height="24"
+          />
+        </div>
+        <h4 class="!mt-4 !font-medium">Stay in sync</h4>
+        <p class="text-gray-600 !mt-2">
+          Instant notifications and checklists to keep everyone aligned
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tagline -->
+  <section class="container-width px-4 py-8 text-center !mt-4">
+    <h2 class="!font-medium">
+      One Platform. Every Role. <br />
+      Seamless Execution.
+    </h2>
+    <p class="!mt-2">Built for every role in the field</p>
+  </section>
+
+  <!-- User Groups Section -->
+  <section
+    class="container-width mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8 !mt-4"
+  >
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Agronomists</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        Agronomists serve as the hub of coordination in PollinLink. They assign
+        and schedule tasks, communicate directly with pollinators, crop
+        inspectors, roguing crews, spray plane operators, and researchers. From
+        uploading field photos and tracking seeding progress to approving
+        shelter placements and flagging field conditions, agronomists use the
+        app to ensure everyone is aligned and operations move forward safely and
+        efficiently.
+      </p>
+    </div>
+
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Pollinators</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        Pollinators receive task requests and updates directly from agronomists,
+        manage their own schedules, and scan shelters and trays for tracking.
+        They can adjust bee placements based on field readiness, monitor weather
+        and spraying alerts, and ensure bees are deployed safely and
+        efficiently.
+      </p>
+    </div>
+
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Crop Contractors</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        Crop inspectors can view schedules, field conditions, and notes provided
+        by agronomists. They access maps showing shelter layouts and flagged
+        zones, and can submit inspection results directly into the app, creating
+        a shared record that helps agronomists track field compliance and
+        performance.
+      </p>
+    </div>
+
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Roguing Crews</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        The roguing team gets real-time updates from agronomists on which fields
+        are active, safe, or require caution. Access point instructions, flagged
+        hazards, and spraying timelines are visible in-app, helping crews plan
+        efficient, low-risk field visits and stay in sync with broader
+        pollination timelines.
+      </p>
+    </div>
+
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Spray Plane Companies</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        PollinLink integrates seamlessly with spray plan scheduling software,
+        automatically updating when personnel are scheduled in the field. This
+        real-time sync helps operators avoid conflicts without needing manual
+        input from agronomists. It reduces the risk of accidental exposure, cuts
+        down on last-minute cancellations, and protects spray companies from
+        liability concerns.
+      </p>
+    </div>
+
+    <div class="bg-primary-faint p-4 rounded-2xl">
+      <h4 class="!font-normal mb-4">Researchers</h4>
+      <p class="text-gray-500 text-sm mt-3">
+        Researchers can collect and track data related to bee health,
+        pollination timing, and environmental conditions. PollinLink supports
+        field-level data entry, exportable reports, and structured observations,
+        enabling research into pollination performance, chemical exposure, and
+        long-term sustainability—without accessing proprietary company data.
+      </p>
+    </div>
+  </section>
+
+  <!-- Chemical Safety Section -->
+  <section
+    class="container-width px-2 py-7 md:px-4 md:py-12 flex flex-col md:flex-row items-center gap-8 md:gap-x-10 !mt-12"
+  >
+    <div class="md:w-1/2">
+      <h2 class="mb-4">Chemical Safety</h2>
+      <p class="text-gray-600 mb-4">
+        PollinLink is built with worker and pollinator safety at its core. Our
+        chemical safety system alerts users of recent or upcoming spraying
+        events, preventing accidental exposure to harmful pesticides. Through
+        integration with spray plane software and real-time field status
+        updates, we ensure that fields are only entered when safe—protecting
+        people while helping companies stay compliant with chemical application
+        standards.
+      </p>
+    </div>
+    <div class="flex justify-end md:w-1/2">
+      <img
+        class="object-contain !w-full !h-full md:!w-[430px] md:!h-[480px]"
+        ngSrc="/media/chemical safety.png"
+        alt="chemical safety image"
+        width="430"
+        height="480"
+      />
+    </div>
+  </section>
+
+  <!-- Collaboration Section -->
+  <section
+    class="container-width px-2 py-7 md:px-4 md:py-12 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-x-10 !mt-4"
+  >
+    <div class="md:w-1/2">
+      <img
+        class="object-contain !w-full !h-full md:!w-[430px] md:!h-[480px]"
+        ngSrc="/media/collaboration.png"
+        alt="collaboration image"
+        width="430"
+        height="480"
+      />
+    </div>
+    <div class="md:w-1/2">
+      <h2 class="mb-4">Collaboration</h2>
+      <p class="text-gray-600 mb-4">
+        PollinLink bridges the gap between different users by providing a
+        centralized communication platform. With role-specific logins,
+        field-specific messaging threads, and integrated approval workflows, the
+        app fosters efficient, transparent coordination across all stakeholders.
+        Whether you’re scheduling a bee placement or reviewing field conditions,
+        everyone stays connected and informed.
+      </p>
+    </div>
+  </section>
+
+  <!-- Task Management Section -->
+  <section
+    class="container-width px-2 py-7 md:px-4 md:py-12 flex flex-col md:flex-row items-center gap-8 md:gap-x-10 !mt-4"
+  >
+    <div class="md:w-1/2">
+      <h2 class="mb-4">Task Management</h2>
+      <p class="text-gray-600 mb-4">
+        From bee placements to crop inspections, PollinLink makes it easy to
+        assign, track, and complete every task in your processes. Our intuitive
+        calendar and checklist tools provide clarity on what&apos;s scheduled,
+        what&apos;s pending, and what needs attention. With task notifications,
+        crew management, and automated reminders, you&apos;ll never miss a
+        critical step again.
+      </p>
+    </div>
+    <div class="flex justify-end md:w-1/2">
+      <img
+        class="object-contain !w-full !h-full md:!w-[430px] md:!h-[480px]"
+        ngSrc="/media/task management.png"
+        alt="task management image"
+        width="430"
+        height="480"
+      />
+    </div>
+  </section>
+
+  <!-- Mapping Section -->
+  <section
+    class="container-width px-2 py-7 md:px-4 md:py-12 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-x-10 mb-16"
+  >
+    <div class="md:w-1/2">
+      <img
+        class="object-contain !w-full !h-full md:!w-[430px] md:!h-[480px]"
+        ngSrc="/media/mapping.png"
+        alt="mapping image"
+        width="430"
+        height="480"
+      />
+    </div>
+    <div class="md:w-1/2">
+      <h2 class="text-2xl font-bold mb-4">Mapping</h2>
+      <p class="text-gray-600 mb-4">
+        Our interactive mapping tools take field visibility to the next level.
+        View shelter placements, flag hazards, approve layouts, and track
+        field-specific issues with precision. Integrated mapping with GPS data
+        ensures that every decision is backed by location-aware context.
+      </p>
+    </div>
+  </section>
+
+  <!-- Data Security Section -->
+  <section
+    class="container-width px-2 py-7 md:px-4 md:py-12 flex flex-col md:flex-row items-center gap-8 md:gap-x-10 mb-16"
+  >
+    <div class="md:w-1/2">
+      <h2 class="text-2xl font-bold mb-4">Data Security</h2>
+      <p class="text-gray-600 mb-4">
+        PollinLink is designed to protect your most sensitive operational data. We use industry-standard encryption, role-based access control, secure authentication protocols, and strict privacy policies to ensure that only authorized users access your information. With full compliance and robust backend protections, your data remains secure, always.
+      </p>
+    </div>
+    <div class="flex justify-end md:w-1/2">
+      <img
+        class="object-contain !w-full !h-full md:!w-[430px] md:!h-[480px]"
+        ngSrc="/media/data-security.png"
+        alt="data security image"
+        width="430"
+        height="480"
+      />
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="mt-10 w-full">
+    <app-cta />
+  </section>
+</main>

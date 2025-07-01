@@ -1,0 +1,129 @@
+<div class="">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">Dashboard</h1>
+    <button 
+      (click)="onFilterClick()"
+      class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+    >
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+      </svg>
+      Filter
+    </button>
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+    <h2 class="text-xl font-medium text-gray-700">Welcome Back , {{ userName }}</h2>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    @for (card of metricCards; track $index) {
+        <div  
+          class="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-sm font-medium text-gray-600">{{ card.title }}</h3>
+            @if (card.showEye) {
+                <button 
+                  (click)="toggleVisibility(card)"
+                  class="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    @if (card.visible) {
+                        <path 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          stroke-width="2" 
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          stroke-width="2" 
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                    } @else {
+                        <path 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          stroke-width="2" 
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                        />
+                    }
+                  </svg>
+                </button>
+            }
+          </div>
+          
+          <div class="mb-2">
+            @if (card.visible) {
+                <span 
+                  class="text-2xl font-bold text-gray-800"
+                >
+                  {{ card.amount }}
+                </span>
+            } @else {
+                <span class="text-2xl font-bold text-gray-800">••••••••</span>
+            }
+
+
+          </div>
+          
+          <p class="text-sm text-gray-500">{{ card.subtitle }}</p>
+        </div>
+    }
+  </div>
+
+  <!-- Charts Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Transaction Overview Chart -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Transaction Overview</h3>
+        <div class="flex items-center space-x-6">
+          <div class="flex items-center">
+            <div class="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-600">Inward Transaction</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-3 h-3 bg-pink-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-600">Outward Transaction</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="h-80">
+        <canvas #lineChart></canvas>
+      </div>
+    </div>
+
+    <!-- Transaction Status Chart -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-6">Transaction Status</h3>
+      
+      <div class="flex items-center justify-between">
+        <div class="h-64 w-64">
+          <canvas #donutChart></canvas>
+        </div>
+        
+        <div class="space-y-4 ml-6">
+            @for (item of transactionStatusData; track $index) {
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div 
+                      class="w-3 h-3 rounded-full mr-3"
+                      [style.background-color]="item.color"
+                    ></div>
+                    <span class="text-sm text-gray-600">{{ item.label }}</span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-800">{{ item.value }}</span>
+                </div>
+            }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="example-container" [class.example-is-mobile]="isMobile()">
+  <mat-toolbar class="block fixed z-10 md:!hidden">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon class="material-icons-outlined">menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">Responsive App</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="isMobile() ? 56 : 0"
+    [hasBackdrop]="isMobile()"
+  >
+    <mat-sidenav
+      #snav
+      class="!w-2/3 md:!w-2xs border-r !border-gray-200 !rounded-none"
+      [opened]="!isMobile()"
+      [mode]="isMobile() ? 'over' : 'side'"
+      [fixedInViewport]="isMobile()"
+      fixedTopGap="56"
+      disableClose
+    >
+      <mat-nav-list class="!flex flex-col justify-between h-full">
+        <div>
+          <section class="p-6">
+            <img
+              class="w-42 !h-14 object-contain"
+              ngSrc="/icons/United Softwares Logo.svg"
+              alt="pollinlink logo"
+              width="240"
+              height="42"
+              priority
+            />
+          </section>
+
+          <div>
+            <app-sidebar />
+          </div>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar class="hidden md:block !p-2 md:!px-7 border-b border-b-gray-200">
+        <app-desktop-nav />
+      </mat-toolbar>
+      @if (loaderService.isLoading()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+      <div class="p-2 md:px-7 md:py-8 min-h-screen bg-gray-50">
+          <router-outlet />
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

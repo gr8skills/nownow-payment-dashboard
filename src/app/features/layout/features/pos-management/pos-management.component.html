@@ -1,0 +1,224 @@
+<div class="">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-semibold text-gray-800">POS Managmnet</h1>
+    <button 
+      (click)="onAddAgent()"
+      class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+    >
+      Add Agent
+    </button>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+    @for (card of metricCards; track $index) {
+        <div 
+          class="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+        >
+          <h3 class="text-sm font-medium text-gray-600 mb-3">{{ card.title }}</h3>
+          <div class="mb-2">
+            <span 
+              class="font-bold text-gray-800"
+              [class.text-4xl]="card.type === 'agent'"
+              [class.text-xl]="card.type === 'transaction'"
+            >
+              {{ card.value }}
+            </span>
+          </div>
+          <p class="text-xs text-gray-500">{{ card.subtitle }}</p>
+        </div>
+    }
+  </div>
+
+  <!-- All Agent Section -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+  <div class="p-6 border-b border-gray-200">
+    <h2 class="text-xl font-semibold text-gray-800">All Agents</h2>
+  </div>
+
+  <!-- Table Container -->
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <!-- Table Header -->
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Serial No</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">POS Serial</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Agent Name</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Sub Wallet ID</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Balance</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Action</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Ticket Status</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody class="bg-white divide-y divide-gray-200">
+        @for (agent of agentData; track $index) {
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 text-sm text-gray-900">{{ agent.serialNo }}</td>
+            <td class="px-6 py-4 text-sm text-gray-900">{{ agent.posSerialNo }}</td>
+            <td class="px-6 py-4 text-sm text-gray-900">{{ agent.agentName }}</td>
+            <td class="px-6 py-4">
+              <span [class]="getStatusClass(agent.status)">
+                {{ formatStatus(agent.status) }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900">{{ agent.subWalletId }}</td>
+            <td class="px-6 py-4 text-sm text-gray-900">{{ formatBalance(agent.balance) }}</td>
+            <td class="px-4 py-4">
+              <div class="flex items-center space-x-4">
+                <!-- Settings Icon -->
+                <button 
+                  (click)="editAgent(agent)"
+                  class="text-gray-400 hover:text-gray-600 transition-colors"
+                  title="Settings"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 23 23">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </button>
+
+                <!-- Raise Hand Icon -->
+                <button 
+                  (click)="raiseTicket(agent)"
+                  class="text-gray-400 hover:text-blue-600 transition-colors"
+                  title="Raise Ticket"
+                >
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1 7.70005C15.5484 7.70005 15.0023 7.80869 14.4927 8.01976C13.9832 8.23082 13.5202 8.54019 13.1302 8.9302C12.7401 9.32021 12.4308 9.78321 12.2197 10.2928C12.0086 10.8023 11.9 11.3485 11.9 11.9C11.9 12.4516 12.0086 12.9978 12.2197 13.5073C12.4308 14.0169 12.7401 14.4799 13.1302 14.8699C13.5202 15.2599 13.9832 15.5693 14.4927 15.7803C15.0023 15.9914 15.5484 16.1 16.1 16.1C17.2139 16.1 18.2822 15.6576 19.0698 14.8699C19.8575 14.0822 20.3 13.014 20.3 11.9C20.3 10.7861 19.8575 9.71785 19.0698 8.9302C18.2822 8.14255 17.2139 7.70005 16.1 7.70005ZM10.5 11.9C10.5 10.4148 11.09 8.99045 12.1402 7.94025C13.1904 6.89005 14.6148 6.30005 16.1 6.30005C17.5852 6.30005 19.0096 6.89005 20.0598 7.94025C21.11 8.99045 21.7 10.4148 21.7 11.9C21.7 13.3853 21.11 14.8096 20.0598 15.8598C19.0096 16.9101 17.5852 17.5 16.1 17.5C14.6148 17.5 13.1904 16.9101 12.1402 15.8598C11.09 14.8096 10.5 13.3853 10.5 11.9Z" fill="#1E1E1E" fill-opacity="0.6"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 5.60005C3.5 4.85744 3.795 4.14525 4.3201 3.62015C4.8452 3.09505 5.55739 2.80005 6.3 2.80005C7.04261 2.80005 7.7548 3.09505 8.2799 3.62015C8.805 4.14525 9.1 4.85744 9.1 5.60005V10.1808C9.1 11.5808 9.59 12.9346 10.486 14.0098L12.4376 16.352C12.5512 16.4952 12.6043 16.6771 12.5856 16.8589C12.5668 17.0407 12.4778 17.2079 12.3374 17.3249C12.197 17.4419 12.0164 17.4993 11.8342 17.485C11.6521 17.4706 11.4827 17.3856 11.3624 17.248L9.4108 14.9059C8.30521 13.5796 7.6998 11.9075 7.7 10.1808V5.60005C7.7 5.22875 7.5525 4.87265 7.28995 4.6101C7.0274 4.34755 6.6713 4.20005 6.3 4.20005C5.9287 4.20005 5.5726 4.34755 5.31005 4.6101C5.0475 4.87265 4.9 5.22875 4.9 5.60005V10.85C4.90017 11.8844 5.15501 12.9027 5.642 13.8152L10.4174 22.771C10.4972 22.9341 10.5106 23.1217 10.4547 23.2944C10.3988 23.467 10.2781 23.6113 10.1179 23.6966C9.95773 23.782 9.77067 23.8018 9.59617 23.7519C9.42168 23.7019 9.2734 23.5862 9.1826 23.4291L4.4058 14.4733C3.81111 13.3581 3.50003 12.1138 3.5 10.85V5.60005Z" fill="#1E1E1E" fill-opacity="0.6"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2001 16.8001C11.2001 16.6144 11.2738 16.4364 11.4051 16.3051C11.5364 16.1738 11.7144 16.1001 11.9001 16.1001H15.4001C17.4423 16.1001 19.4008 16.9113 20.8448 18.3554C22.2888 19.7994 23.1001 21.7579 23.1001 23.8001V26.6001C23.1001 26.7858 23.0263 26.9638 22.8951 27.0951C22.7638 27.2263 22.5857 27.3001 22.4001 27.3001C22.2144 27.3001 22.0364 27.2263 21.9051 27.0951C21.7738 26.9638 21.7001 26.7858 21.7001 26.6001V23.8001C21.7001 22.1292 21.0363 20.5268 19.8549 19.3453C18.6734 18.1638 17.071 17.5001 15.4001 17.5001H11.9001C11.7144 17.5001 11.5364 17.4263 11.4051 17.2951C11.2738 17.1638 11.2001 16.9857 11.2001 16.8001ZM9.8001 22.4001C9.98575 22.4001 10.1638 22.4738 10.2951 22.6051C10.4263 22.7364 10.5001 22.9144 10.5001 23.1001V26.6001C10.5001 26.7858 10.4263 26.9638 10.2951 27.0951C10.1638 27.2263 9.98575 27.3001 9.8001 27.3001C9.61445 27.3001 9.4364 27.2263 9.30512 27.0951C9.17385 26.9638 9.1001 26.7858 9.1001 26.6001V23.1001C9.1001 22.9144 9.17385 22.7364 9.30512 22.6051C9.4364 22.4738 9.61445 22.4001 9.8001 22.4001Z" fill="#1E1E1E" fill-opacity="0.6"/>
+              </svg>
+                </button>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900">
+              {{ getTicketStatus(agent) }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Pagination (Optional) -->
+  <div class="flex items-center justify-between mt-6">
+    <div class="text-sm text-gray-700">
+      Showing <span class="font-medium">1</span> to <span class="font-medium">{{ agentData.length }}</span> of <span class="font-medium">{{ agentData.length }}</span> results
+    </div>
+    
+    <div class="flex items-center space-x-2">
+      <button class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50" disabled>
+        Previous
+      </button>
+      <button class="px-3 py-2 text-sm font-medium text-white bg-gray-800 border border-gray-800 rounded-md hover:bg-gray-900">
+        1
+      </button>
+      <button class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        2
+      </button>
+      <button class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+ <!-- Remapping POS Modal -->
+<div *ngIf="showRemappingModal" class="fixed inset-0 bg-opacity-500 z-40 flex justify-end">
+    <div class="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-30">
+        <div class="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] p-6 relative">
+        <!-- Modal Header -->
+
+
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-gray-800">Remapping POS?</h2>
+          <button (click)="closeRemapModal()" class="modal-close-btn">×</button>
+       </div>
+
+        <!-- Current Agent Name Input -->
+        <div class="mb-4">
+            <label class="block text-left text-sm font-medium text-gray-700 mb-1">Current Agent Name</label>
+            <input type="text"
+            placeholder="Current Agent Name"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400">
+        </div>
+
+          <!-- New Agent Name Input -->
+        <div class="mb-4">
+            <label class="block text-left text-sm font-medium text-gray-700 mb-1">New Agent Name</label>
+            <input type="text"
+            placeholder="New Agent Name"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400">
+        </div>
+
+        <!-- Send Button -->
+        <div class="text-left">
+            <button 
+            (click)="sendReMapPos()" 
+            class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+    </div>
+
+</div>
+
+ <!-- Not POS Modal -->
+<div *ngIf="showPosModal" class="fixed inset-0 bg-opacity-500 z-40 flex justify-end">
+    <div class="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-30">
+        <div class="bg-white rounded-lg shadow-lg w-[90%] sm:w-[600px] p-6 relative">
+        <!-- Modal Header -->
+
+
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-gray-800">Is your POS not Working? Raise a Ticket!</h2>
+          <button (click)="closePosModal()" class="modal-close-btn">×</button>
+       </div>
+
+        <!-- Category Input -->
+        <div class="mb-4">
+            <label class="block text-left text-sm font-medium text-gray-700 mb-1">Category</label>
+            <input type="text"
+            placeholder="Enter Category Here"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400">
+        </div>
+
+          <!-- Sub-Categories Input -->
+        <div class="mb-4">
+            <label class="block text-left text-sm font-medium text-gray-700 mb-1">Sub-Categories</label>
+            <input type="text"
+            placeholder="Enter Sub-Categories Here"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400">
+        </div>
+
+        <!-- Description - Textarea -->
+        <div class="mb-4">
+            <label class="block text-left text-sm font-medium text-gray-700 mb-1">Description</label>
+            <textarea
+                placeholder="Enter Description Here"
+                rows="4"  
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400"
+            ></textarea>
+        </div>
+
+        <!-- Send Button -->
+        <div class="text-left">
+            <button 
+            (click)="sendPos()" 
+            class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+    </div>
+
+</div>

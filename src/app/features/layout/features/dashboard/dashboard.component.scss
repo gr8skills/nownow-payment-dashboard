@@ -1,0 +1,28 @@
+/* Custom styles for charts */
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* Ensure charts are responsive */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Custom scrollbar for mobile */
+@media (max-width: 768px) {
+  .grid {
+    overflow-x: auto;
+  }
+}
+
+/* Animation for metric cards */
+.metric-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+}

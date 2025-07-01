@@ -1,0 +1,90 @@
+<div class="bg-primary-faint flex items-center justify-center">
+  <div class="max-w-4xl mx-auto px-4 py-12 md:py-32 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <h1 class="">Contact Us</h1>
+      <p class="!mt-4 text-lg text-gray-600">
+        We are here to help you with any questions or concerns you may have.
+      </p>
+    </div>
+
+    <div class="prose prose-lg !mt-6 max-w-none">
+      <section class="!mb-10">
+        <h2 class="">Get in Touch</h2>
+        <p class="text-gray-700 !mt-2">
+          If you have any questions, feedback, or need assistance, please reach
+          out to us:
+        </p>
+        <br>
+        <p class="text-gray-700 !mb-6">
+          We aim to respond to all inquiries within 24 hours.
+        </p>
+
+        <form [formGroup]="contactForm" (submit)="onSubmit()">
+          <div class="flex flex-col gap-y-5">
+            <mat-form-field>
+              <mat-label>Full Name</mat-label>
+              <input
+                matInput
+                placeholder="Enter your full name"
+                formControlName="name"
+                autocomplete="name"
+              />
+              @if (name?.invalid && (name?.touched || name?.dirty)) {
+              <mat-error
+                >name is required and should be more than 3 letters and less than 50 letters</mat-error
+              >
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Email address</mat-label>
+              <input
+                type="email"
+                matInput
+                placeholder="Enter your email address"
+                formControlName="email"
+                autocomplete="email"
+              />
+              @if (email?.invalid && (email?.touched || email?.dirty)) {
+              <mat-error
+                >email is required and should be a valid email
+                address</mat-error
+              >
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Message</mat-label>
+              <textarea
+                matInput
+                placeholder="Type your message here"
+                formControlName="message"
+                autocomplete="message"
+                maxlength="255"
+                rows="5"
+              > </textarea>
+              @if (messageControl?.invalid && (messageControl?.touched || messageControl?.dirty)) {
+              <mat-error
+                >message is required and should be more than 10 letters and less than 255 letters</mat-error
+              >
+              }
+            </mat-form-field>
+
+            @if(message() && !loading()){
+            <app-error-message [message]="message()" />
+            }
+
+            <div>
+              <app-button
+                type="submit"
+                text="Send"
+                [loading]="loading()"
+                [disabled]="contactForm.invalid || loading()"
+              />
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

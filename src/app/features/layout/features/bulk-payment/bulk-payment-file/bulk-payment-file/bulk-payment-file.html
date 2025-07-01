@@ -1,0 +1,236 @@
+<div class="relative">
+
+
+<div class="p-6">
+
+  <div
+  [class.blur-sm]="showReceiptModal || showEmailModal"
+  [class.pointer-events-none]="showReceiptModal || showEmailModal"
+  class="transition duration-200"
+>
+
+  <h5 class="text-xl font-semibold mb-2">Bulk Payment</h5>
+
+  <!-- Filter and Table Header -->
+  <div class="flex justify-between items-center bg-gray-50 border-b border-gray-200 p-4">
+    <h2 class="text-lg font-medium text-gray-600 mb-6">{{ fileName }}</h2>
+    <div class="relative">
+      <input
+        type="text"
+        [(ngModel)]="filterText"
+        (input)="applyFilter()"
+        placeholder="Filter payments..."
+        class="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      >
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <!-- Tailwind SVG: Search Icon -->
+        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <table class="w-full">
+      <!-- Table Header -->
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr><th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      <input type="checkbox" (change)="toggleAll($event)" class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"></th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serial No.</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary Name</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary A/C</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobile No.</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Receipt</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody class="bg-white divide-y divide-gray-200">
+        @for (detail of filteredPaymentDetails; track detail.serialNo) {
+          <tr class="hover:bg-gray-50 transition-colors">
+
+           <td class="px-4 py-3 text-sm"><input type="checkbox" [(ngModel)]="detail.selected"
+          (change)="$event.stopPropagation()" class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"></td>
+            <td class="px-4 py-3 text-sm text-gray-900">{{ detail.serialNo }}</td>
+            <td class="px-4 py-3 text-sm text-gray-900">{{ detail.beneficiaryName }}</td>
+            <td class="px-4 py-3 text-sm text-gray-900">{{ detail.beneficiaryAccount }}</td>
+            <td class="px-4 py-3 text-sm text-gray-900">{{ detail.mobileNo }}</td>
+            <td class="px-4 py-3 text-sm text-gray-900">₦{{ detail.amount | number }}</td>
+            <td class="px-4 py-3 text-sm">
+              <span [class]="detail.status === 'Success'
+                ? 'bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium'
+                : 'bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium'">
+                {{ detail.status }}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-900">{{ detail.reason }}</td>
+            <td class="px-4 py-3 text-sm text-gray-900">
+            @if (detail.status === 'Success') {
+                <button
+                (click)="openReceiptModal(detail); $event.stopPropagation()"
+                class="text-blue-500 hover:text-blue-700"
+                >
+                <!-- Tailwind SVG: Document Icon -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                </button>
+            } @else {
+                <span class="text-gray-400">-</span>
+            }
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="8" class="px-4 py-6 text-center text-sm text-gray-500">
+              No payments found matching your filter criteria
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Receipt Modal -->
+  @if (showReceiptModal) {
+    <div class="fixed inset-0 z-50 overflow-auto">
+    <div class="absolute inset-0  bg-opacity-10  transition-opacity" (click)="closeReceiptModal()"></div>
+      <div class="fixed inset-y-0 right-0 w-full max-w-[25%] bg-gray-20 shadow-xl h-full transform transition-transform duration-300 ease-in-out translate-x-0">
+        <div class="h-full flex flex-col">
+
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center border-b p-4 bg-white">
+            <h3 class="text-sm font-semibold">Receipt</h3>
+            <div class="space-x-2">
+            <button
+            (click)="openEmailModal()"
+            class="px-3 py-1 border border-gray-300 rounded text-xs font-medium text-gray-700 hover:bg-gray-50"
+            >
+            Email
+            </button>
+              <button
+                (click)="downloadReceipt()"
+                class="px-3 py-1 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700"
+              >
+                Download
+              </button>
+              <button
+                (click)="closeReceiptModal()"
+                class="text-white bg-blue-500 hover:bg-red-700 rounded-full p-1.5 ml-2 focus:outline-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            </div>
+          </div>
+
+          <!-- Modal Content -->
+          <div class="flex-1 p-4 bg-gray-50 rounded-t-lg space-y-4 overflow-y-auto">
+
+            <!-- Agency Info -->
+            <div class="text-left">
+              <p class="font-medium text-sm">{{ receiptData.agencyName }}</p>
+              <p class="text-xs">{{ receiptData.agencyAddress }}</p>
+              <p class="text-xs">{{ receiptData.agencyCityStateZip }}</p>
+            </div>
+
+            <!-- Order Number -->
+            <h2 class="text-center bg-gray-50 text-sm font-semibold mb-4">ORDER #: {{ receiptData.orderNumber }}</h2>
+
+            <!-- Payment Details -->
+            <div class="mb-4 bg-white p-3 rounded-md shadow-sm ">
+              <h4 class="font-medium text-xs mb-2">PAYMENT DETAILS</h4>
+              <div class="space-y-1 text-xs">
+                <div class="flex justify-between">
+                  <span>Citation: {{ receiptData.citation }}</span>
+                  <span>Agency SubTotal: ${{ receiptData.subTotal | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-end">
+                  <span>Lexxines Service Fee: ${{ receiptData.serviceFee | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-end">
+                  <span class="text-red-600 font-semibold">Total USD: ${{ receiptData.total | number:'1.2-2' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Invoice Details Section -->
+            <div class="mb-4 bg-white p-3 rounded-md shadow-sm ">
+              <h4 class="font-medium text-xs mb-2">INVOICE DETAILS</h4>
+              <div class="space-y-2 text-xs">
+                <div class="flex justify-between"><span>CARD #9834</span><span>VISA</span></div>
+                <div class="flex justify-between"><span>PAYMENT: CREDIT</span><span>CHIP READ-CONTACT</span></div>
+                <div class="flex justify-between"><span>MODE</span><span>ISSUER</span></div>
+                <div class="flex justify-between"><span>MID</span><span>MID</span></div>
+                <div class="flex justify-between"><span>TID</span><span>TID</span></div>
+                <div class="flex justify-between"><span>APP LABEL:</span><span>APP LABEL</span></div>
+                <div class="flex justify-between"><span>CVM</span><span>CVM</span></div>
+                <div class="flex justify-between"><span>AID</span><span>AID</span></div>
+                <div class="flex justify-between"><span>CID</span><span>CID</span></div>
+                <div class="flex justify-between"><span>AC</span><span>AC</span></div>
+                <div class="flex justify-between"><span>AMOUNT</span><span>AMOUNT</span></div>
+              </div>
+            </div>
+
+            <!-- Card Approved Section -->
+            <div class="text-center mb-4">
+              <p class="text-emerald-500 font-semibold text-sm">***CARD APPROVED***</p>
+            </div>
+
+            <!-- Amount Paid -->
+            <div class="text-left">
+              <p class="font-medium text-sm">AMOUNT PAID: $12.50</p>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Email Modal -->
+    @if (showEmailModal) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-30">
+        <div class="bg-white rounded-lg shadow-lg w-[90%] sm:w-[400px] p-6 relative">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-center flex-1">Email</h3>
+        <button
+            (click)="closeEmailModal()"
+            class="text-white bg-red-600 hover:bg-red-700 rounded-full p-1.5 ml-2 focus:outline-none"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        </div>
+
+        <!-- Email Input -->
+        <div class="mb-4">
+            <input
+            type="email"
+            [(ngModel)]="emailAddress"
+            placeholder="Enter Email ID"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+        </div>
+
+        <!-- Send Button -->
+        <div class="text-center">
+            <button
+            (click)="sendEmail()"
+            class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+            Send
+            </button>
+        </div>
+        </div>
+    </div>
+    }
+</div>
